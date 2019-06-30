@@ -19,11 +19,6 @@ textures::textures(files * _Files)
 	for (auto Names : Tuiles_name)
 	{
 		Tuiles.push_back(Files->Get_texture(Tuiles_name[Boucle]));
-		++Boucle;
-	}
-	Boucle = 0;
-	for (auto Names : Tuiles_name)
-	{
 		Images_tuile.push_back(Files->Get_image(Tuiles_name[Boucle]));
 		++Boucle;
 	}

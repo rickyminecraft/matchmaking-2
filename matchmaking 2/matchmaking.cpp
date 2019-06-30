@@ -25,6 +25,8 @@ bool matchmaking::Run()
 	//sf::Image image; 
 	//sf::Text texte;
 
+	short count = 0;
+
 	while (Is_running)
 	{
 		Windows->pollEvent(event);
@@ -32,14 +34,6 @@ bool matchmaking::Run()
 		{
 		case game_stats::Init:
 			
-			//short ID;
-			//ID = Get_ID_for_name("02.jpg");
-			//image = Get_image(ID);
-			//test2.setTexture(*Get_texture(ID));
-			//ID = Get_ID_for_name("musique.ogg");
-			//mtest= 
-				//Get_sound(ID)->play();
-			//ID = Get_ID_for_name("arial.ttf");
 			//	texte.setFont(*Get_font(ID));
 			//	texte.setOutlineColor(sf::Color::Black);
 			//	texte.setFillColor(sf::Color::Red);
@@ -56,13 +50,53 @@ bool matchmaking::Run()
 			switch (event.type)
 			{
 			case sf::Event::Closed:
-				Is_running = false;
+				Statut = game_stats::Exit;
+				break;
+			case sf::Event::MouseButtonPressed:
+				if (count == 0)
+				{
+					
+				}
+				count++;
+				break;
+			case sf::Event::MouseButtonReleased:
+				count = 0;
+				break;
+			case sf::Event::MouseMoved:
+				
 				break;
 			}
 			break;
 		case game_stats::Play:
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+				Statut = game_stats::Exit;
+				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					Statut = game_stats::Main;
+				}
+				break;
+			case sf::Event::MouseButtonPressed:
+				if (count == 0)
+				{
+
+				}
+				count++;
+				break;
+			case sf::Event::MouseButtonReleased:
+				count = 0;
+				break;
+			case sf::Event::MouseMoved:
+
+				break;
+			}
 			break;
 		case game_stats::Win:
+			//si on gagne, joue un son
+			Sound.get()->Sound(Sound_type::victoire);
 			break;
 		case game_stats::Next:
 			break;
@@ -74,10 +108,9 @@ bool matchmaking::Run()
 		{
 			mtest.play();
 		}*/
-		//Rinstance->Draw(test);
 		Renderer->Render();
 
 	}
 
-	return false;
+	return true;
 }
