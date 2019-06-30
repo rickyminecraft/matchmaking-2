@@ -68,9 +68,6 @@
     <ClInclude Include="renderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="variables.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="SoundTypes.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

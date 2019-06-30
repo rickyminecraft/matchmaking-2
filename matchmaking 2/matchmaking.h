@@ -6,6 +6,8 @@
 #include "renderer.h"
 #include "tiles.h"
 #include "sound.h"
+#include "textures.h"
+#include "files.h"
 
 class matchmaking//: virtual private files
 {
@@ -24,16 +26,21 @@ private:
 
 	//resolution
 	const unsigned int Width = 1024, Height = 768;
-	//name
+	//game name
 	sf::String Application_name = "Matchmaking";
-	//resolution handle
+	//resolution instance
 	sf::VideoMode Resolution;
-	//window handle
+	//window instance
 	std::unique_ptr <sf::RenderWindow> Windows;
-	//renderer handle
-	std::unique_ptr <renderer> Rinstance;
 
 	tiles Tiles;
+	//sound instance
 	std::unique_ptr <sound>  Sound;
+	//texture instance
+	std::unique_ptr <textures>  Texture;
+	//files instance
+	std::unique_ptr <files>  Files;
+	//renderer instance
+	std::unique_ptr <renderer> Renderer;
 };
 

@@ -4,23 +4,38 @@
 
 textures::textures()
 {
-	/*for (auto Names : Fonds_name)
+}
+
+textures::textures(files * _Files)
+{
+	Files = _Files;
+	short Boucle = 0;
+	for (auto Names : Fonds_name)
 	{
-		Load(Names);
+		Fonds.push_back(Files->Get_texture(Fonds_name[Boucle]));
+		++Boucle;
 	}
+	Boucle = 0;
 	for (auto Names : Tuiles_name)
 	{
-		Load(Names);
+		Tuiles.push_back(Files->Get_texture(Tuiles_name[Boucle]));
+		++Boucle;
 	}
-	Load(Selection);
-	Load(Tuile_back);
-	Load(Exit);
-	Load(Play);*/
-	Textures.push_back(Get_texture(Exit_name));
+	Boucle = 0;
+	for (auto Names : Tuiles_name)
+	{
+		Images_tuile.push_back(Files->Get_image(Tuiles_name[Boucle]));
+		++Boucle;
+	}
+	
+	TBack = Files->Get_texture(Tuile_back_name);
+	TExit = Files->Get_texture(Exit_name);
+	TPlay = Files->Get_texture(Play_name);
+	TSelection = Files->Get_texture(Selection_name);
 
 	sf::Image image_hover;
 	image_hover.create(100, 100, sf::Color::Red);
-	hover.loadFromImage(image_hover);
+	Thover.loadFromImage(image_hover);
 }
 
 
@@ -28,43 +43,42 @@ textures::~textures()
 {
 }
 
-//sf::Texture * textures::Get_Texture(Type Texture_Type, short IDs)
-//{
-	//switch (Texture_Type)
-	//{
-	//case Type::Back:
-	//	short ID = Get_ID_for_name(Tuile_back);
-	//	return Get_texture(ID);
-	//	break;
-	//case Type::Exit:
-	//	short ID = Get_ID_for_name(Exit);
-	//	return Get_texture(ID);
-	//	break;
-	//case Type::Fond:
-	//	short ID_texture = Get_ID_for_name(Fonds_name[IDs]);
-	//	return Get_texture(ID_texture);
-	//	break;
-	//case Type::Hover:
-	//	return &hover;
-	//	break;
-	//case Type::Play:
-	//	short ID = Get_ID_for_name(Play);
-	//	return Get_texture(ID);
-	//	break;
-	//case Type::Selection:
-	//	short ID = Get_ID_for_name(Selection);
-	//	return Get_texture(ID);
-	//	break;
-	//case Type::Tuile:
-	//	short ID_texture = Get_ID_for_name(Tuiles_name[IDs]);
-	//	return Get_texture(ID_texture);
-	//	break;
-	//}
-//	return nullptr;
-//}
+sf::Texture * textures::Get_tuile(short Number)
+{
+	return &Tuiles[Number];
+}
 
-//sf::Image textures::Get_Image(short ID)
-//{
-//	short ID_image = Get_ID_for_name(Tuiles_name[ID]);
-//	return Get_image(ID_image);
-//}
+sf::Texture * textures::Get_fond(short Number)
+{
+	return &Fonds[Number];
+}
+
+sf::Texture * textures::Get_exit()
+{
+	return &TExit;
+}
+
+sf::Texture * textures::Get_play()
+{
+	return &TPlay;
+}
+
+sf::Texture * textures::Get_selection()
+{
+	return &TSelection;
+}
+
+sf::Texture * textures::Get_back()
+{
+	return &TBack;
+}
+
+sf::Texture * textures::Get_hover()
+{
+	return &Thover;
+}
+
+sf::Image textures::Get_Image(short Number)
+{
+	return Images_tuile[Number];
+}

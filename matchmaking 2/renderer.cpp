@@ -7,19 +7,15 @@ renderer::renderer()
 
 }
 
-renderer::renderer(sf::RenderWindow * Handle)
+renderer::renderer(sf::RenderWindow * Handle, textures * _Textures)
 {
+	Textures = _Textures;
 	Windows = Handle;
 }
 
 
 renderer::~renderer()
 {
-}
-
-void renderer::set_window_handle(sf::RenderWindow * Handle)
-{
-	Windows = Handle;
 }
 
 //renderer renderer::Add(sf::Vector2f Position, sf::Vector2f Origin, Type Texture_type, sf::Vector2f Scale1, short Number)

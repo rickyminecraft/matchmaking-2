@@ -6,15 +6,18 @@
 
 #include "files.h"
 #include "SoundTypes.h"
-class sound : virtual private files
+class sound
 {
 public:
 	sound();
+	sound(files * _Files);
 	~sound();
 
 	sf::Sound Sound(Sound_type Type);
 
 private:
+	//stock a handle to files
+	files * Files;
 	std::vector<sf::SoundBuffer> Buffers;
 	std::vector<sf::Sound> Sounds;
 

@@ -24,7 +24,10 @@ public:
 private:
 	//mount a zip file
 	void Mount(sf::String);
+	//set error string
 	void Set_Error(sf::String Error);
+	//is file exist ?
+	bool File_exist(sf::String File_name);
 
 	const sf::String Pak_name = "matchmaking.zip";
 

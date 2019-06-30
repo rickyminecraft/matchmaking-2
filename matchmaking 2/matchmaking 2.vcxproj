@@ -144,7 +144,6 @@
     <ClInclude Include="SoundTypes.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="tiles.h" />
-    <ClInclude Include="variables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

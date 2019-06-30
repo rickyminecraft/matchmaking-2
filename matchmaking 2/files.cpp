@@ -41,7 +41,7 @@ sf::Texture files::Get_texture(sf::String File_name)
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Texture Texture;
 
-	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
+	if (File_exist(File_name))
 	{
 		PHYSFS_File * File_Handle = PHYSFS_openRead(File_name.toAnsiString().c_str());
 		PHYSFS_sint64 File_size = PHYSFS_fileLength(File_Handle);
@@ -58,11 +58,7 @@ sf::Texture files::Get_texture(sf::String File_name)
 
 		PHYSFS_close(File_Handle);
 	}
-	else
-	{
-		sf::String Error_text = "file not found: " + File_name;
-		Set_Error(Error_text);
-	}
+
 	return Texture;
 }
 
@@ -71,7 +67,7 @@ sf::Image files::Get_image(sf::String File_name)
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Image Image;
 
-	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
+	if (File_exist(File_name))
 	{
 		PHYSFS_File * File_Handle = PHYSFS_openRead(File_name.toAnsiString().c_str());
 		PHYSFS_sint64 File_size = PHYSFS_fileLength(File_Handle);
@@ -86,11 +82,7 @@ sf::Image files::Get_image(sf::String File_name)
 
 		PHYSFS_close(File_Handle);
 	}
-	else
-	{
-		sf::String Error_text = "file not found: " + File_name;
-		Set_Error(Error_text);
-	}
+
 	return Image;
 }
 
@@ -99,7 +91,7 @@ sf::SoundBuffer files::Get_sound(sf::String File_name)
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::SoundBuffer Sound_buffer;
 
-	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
+	if (File_exist(File_name))
 	{
 		PHYSFS_File * File_Handle = PHYSFS_openRead(File_name.toAnsiString().c_str());
 		PHYSFS_sint64 File_size = PHYSFS_fileLength(File_Handle);
@@ -114,11 +106,7 @@ sf::SoundBuffer files::Get_sound(sf::String File_name)
 
 		PHYSFS_close(File_Handle);
 	}
-	else
-	{
-		sf::String Error_text = "file not found: " + File_name;
-		Set_Error(Error_text);
-	}
+
 	return Sound_buffer;
 }
 
@@ -127,7 +115,7 @@ sf::Font files::Get_font(sf::String File_name)
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Font Font;
 
-	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
+	if (File_exist(File_name))
 	{
 		PHYSFS_File * File_Handle = PHYSFS_openRead(File_name.toAnsiString().c_str());
 		PHYSFS_sint64 File_size = PHYSFS_fileLength(File_Handle);
@@ -142,15 +130,25 @@ sf::Font files::Get_font(sf::String File_name)
 
 		PHYSFS_close(File_Handle);
 	}
-	else
-	{
-		sf::String Error_text = "file not found: " + File_name;
-		Set_Error(Error_text);
-	}
+
 	return Font;
 }
 
 void files::Set_Error(sf::String Error)
 {
 	Error_String = Error;
+}
+
+bool files::File_exist(sf::String File_name)
+{
+	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
+	{
+		return true;
+	}
+	else
+	{
+		sf::String Error_text = "file not found: " + File_name;
+		Set_Error(Error_text);
+		return false;
+	}
 }
