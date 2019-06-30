@@ -63,8 +63,8 @@ textures::~textures()
 //	return nullptr;
 //}
 
-sf::Image textures::Get_Image(short ID)
-{
-	short ID_image = Get_ID_for_name(Tuiles_name[ID]);
-	return Get_image(ID_image);
-}
+//sf::Image textures::Get_Image(short ID)
+//{
+//	short ID_image = Get_ID_for_name(Tuiles_name[ID]);
+//	return Get_image(ID_image);
+//}

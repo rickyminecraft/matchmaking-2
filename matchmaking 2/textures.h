@@ -14,7 +14,7 @@ public:
 
 	//sf::Texture * Get_Texture(Type Texture_Type, short IDs = 0);
 
-	sf::Image Get_Image(short ID);
+	//sf::Image Get_Image(short ID);
 
 private:
 	std::vector<sf::Texture> Textures;

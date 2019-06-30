@@ -141,6 +141,7 @@
     <ClInclude Include="particle.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="SoundTypes.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="tiles.h" />
     <ClInclude Include="variables.h" />
