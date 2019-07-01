@@ -105,7 +105,7 @@ bool matchmaking::Run()
 		case game_stats::Readyplay:
 			//laisse un peut de temps pour vider le pool d'event
 			time2 = horloge.now();
-			if (time2 - time >= std::chrono::milliseconds(200))
+			if (time2 - time >= std::chrono::milliseconds(100))
 			{
 				Statut = game_stats::Play;
 			}
@@ -138,37 +138,50 @@ bool matchmaking::Run()
 				Position_actuel = sf::Vector2f((float)event.mouseMove.x, (float)event.mouseMove.y);
 				break;
 			}
+			//ajoute le fond
+			Renderer->Add_fond(Fond);
 
 			for (short Boucle = 0; Boucle < 48; ++Boucle)
 			{
-				if (do_select)
+				if (do_select && !Tiles.Is_done(Boucle))
 				{
 					if (Tuiles[Boucle].Is_inside(Position_click))
 					{
-						Tuiles[Boucle].Select();
-						switch (Retourne)
+						//evite de retourner plus de 2 tuiles
+						if (Retourne < 2)
 						{
-						case 0:
-							++Retourne;
-							Un = Boucle;
-							break;
-						case 1:
-							++Retourne;
-							Deux = Boucle;
-							time = horloge.now();
-							break;
+							Tuiles[Boucle].Select();
+							switch (Retourne)
+							{
+							case 0:
+								++Retourne;
+								Un = Boucle;
+								break;
+							case 1:
+								//evite que le jeu considere que l'on click 2 fois sur la meme tuile
+								if (Un == Boucle)
+									break;
+								++Retourne;
+								Deux = Boucle;
+								time = horloge.now();
+								break;
+							}
+							do_select = false;
 						}
-						do_select = false;
 					}
 				}
-
-				if (Tuiles[Boucle].Is_select())
+				
+				if (Tuiles[Boucle].Is_select() && !Tiles.Is_done(Boucle))
 				{
 					Renderer->Add_tuile(Tuiles[Boucle].Get_Position(), Tuiles[Boucle].Get_ID());
 				}
 				else
 				{
-					Renderer->Add_back(Tuiles[Boucle].Get_Position());
+					if (!Tiles.Is_done(Boucle))
+					{
+						Renderer->Add_back(Tuiles[Boucle].Get_Position());
+					}
+					
 					if (Tuiles[Boucle].Is_inside(Position_actuel))
 					{
 						Renderer->Add_selection(Tuiles[Boucle].Get_Position());
@@ -176,12 +189,13 @@ bool matchmaking::Run()
 				}
 
 				time2 = horloge.now();
-				if (Retourne == 2 && time2 - time >= std::chrono::seconds(1))
+				if (Retourne == 2 && time2 - time >= std::chrono::milliseconds(500))
 				{
 					if (Tiles.Get(Un) == Tiles.Get(Deux))
 					{
 						Tiles.Done(Un);
 						Tiles.Done(Deux);
+						Sound.get()->Sound(Sound_type::pair)->play();
 					}
 					else
 					{
@@ -192,27 +206,37 @@ bool matchmaking::Run()
 				}
 			}
 
+			//quand on a tout retourner
 			if (Tiles.Is_all_done())
 			{
 				Statut = game_stats::Win;
 			}
 			break;
-		case game_stats::Win:
+		case game_stats::Win: //quand on a fini de retourner toutes les tuiles
 			//si on gagne, joue un son
 			Sound.get()->Sound(Sound_type::victoire)->play();
+			//attend que la musique finisse
+			while (Sound.get()->Sound(Sound_type::victoire)->getStatus() == sf::SoundSource::Playing)
+			{
+			}
 			Tiles.Reset();
 			//do something
 			Statut = game_stats::Next;
 			break;
-		case game_stats::Next:
+		case game_stats::Next: //pour changer le fond et renouveler les tuiles
 			//do something
+			++Fond;
+			if (Fond == 17)
+			{
+				Fond = 0;
+			}
 			Statut = game_stats::Play;
 			break;
-		case game_stats::Exit:
+		case game_stats::Exit: //quitte le jeu
 			Is_running = false;
 			break;
 		}
-		//musique de fond
+		//musique de fond qui tourne en boucle
 		if (Sound.get()->Sound(Sound_type::musique)->getStatus() == sf::SoundSource::Stopped)
 		{
 			Sound.get()->Sound(Sound_type::musique)->play();

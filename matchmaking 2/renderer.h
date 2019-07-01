@@ -28,7 +28,6 @@ private:
 	void Rectangle(const sf::Vector2f Position);
 	void Rectangle(const sf::Vector2f Position, const sf::Vector2f Origin);
 	void Scale(const sf::Vector2f Scale);
-	void Texture(const short _ID);
 	//renderer Texture(Type Texture_type, short ID);
 
 	short Rectangle_ID = 0;

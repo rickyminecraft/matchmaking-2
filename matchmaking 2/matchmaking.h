@@ -26,6 +26,8 @@ private:
 	game_stats Statut;
 	//continue t'on a jouer ?
 	bool Is_running = true, do_select = false;
+	//conpteur pour les fonds
+	short Fond = 0;
 
 	//resolution
 	const unsigned int Width = 1024, Height = 768;
