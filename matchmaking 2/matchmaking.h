@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+
 #include <SFML/Graphics.hpp>
 
 #include "game_stats.h"
@@ -23,7 +25,7 @@ private:
 	//etat actuel
 	game_stats Statut;
 	//continue t'on a jouer ?
-	bool Is_running = true;
+	bool Is_running = true, do_select = false;
 
 	//resolution
 	const unsigned int Width = 1024, Height = 768;
@@ -37,10 +39,10 @@ private:
 	//une representation des tuiles
 	tiles Tiles;
 	//une representation des boutons
-	std::vector<Bouton> tuiles;
-	Bouton Play;
-	Bouton Exit;
-	Bouton Hover;
+	std::vector<bouton> Tuiles;
+	bouton Play;
+	bouton Exit;
+	bouton Hover;
 	//sound instance
 	std::unique_ptr <sound>  Sound;
 	//texture instance
@@ -49,5 +51,9 @@ private:
 	std::unique_ptr <files>  Files;
 	//renderer instance
 	std::unique_ptr <renderer> Renderer;
+
+	std::chrono::steady_clock horloge;
+	std::chrono::steady_clock::time_point time;
+	std::chrono::steady_clock::time_point time2;
 };
 

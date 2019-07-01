@@ -12,12 +12,12 @@ public:
 	~renderer();
 
 	void Add_tuile(const sf::Vector2f Position, const short Number = 0);
-
+	void Add_back(const sf::Vector2f Position);
 	void Add_fond(const short Number);
 	void Add_exit(const sf::Vector2f Position);
 	void Add_play(const sf::Vector2f Position);
 	void Add_hover(const sf::Vector2f Position);
-	void add_selection(const sf::Vector2f Position);
+	void Add_selection(const sf::Vector2f Position);
 	//draw everything waiting to be rendered
 	void Render();
 

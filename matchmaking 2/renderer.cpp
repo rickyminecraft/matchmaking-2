@@ -22,6 +22,14 @@ void renderer::Add_tuile(const sf::Vector2f Position, const short Number)
 {
 	Rectangle(Position);
 	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(128.0f, 128.0f));
+	Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Number));
+}
+
+void renderer::Add_back(const sf::Vector2f Position)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size() - 1].setSize(sf::Vector2f(128.0f, 128.0f));
+	Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_back());
 }
 
 void renderer::Add_fond(const short Number)
@@ -52,7 +60,7 @@ void renderer::Add_hover(const sf::Vector2f Position)
 	Rectangle_database[Rectangle_database.size()-1].setTexture(Textures->Get_hover());
 }
 
-void renderer::add_selection(const sf::Vector2f Position)
+void renderer::Add_selection(const sf::Vector2f Position)
 {
 	Rectangle(Position);
 	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(128.0f, 128.0f));
