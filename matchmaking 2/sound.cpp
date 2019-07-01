@@ -27,22 +27,22 @@ sound::~sound()
 {
 }
 
-sf::Sound sound::Sound(Sound_type Type)
+sf::Sound * sound::Sound(const Sound_type Type)
 {
 	switch (Type)
 	{
 	case Sound_type::musique:
-		return Sounds[1];
+		return &Sounds[1];
 		break;
 	case Sound_type::pair:
-		return Sounds[0];
+		return &Sounds[0];
 		break;
 	case Sound_type::retourne:
-		return Sounds[2];
+		return &Sounds[2];
 		break;
 	case Sound_type::victoire:
-		return Sounds[3];
+		return &Sounds[3];
 		break;
 	}
-	return sf::Sound();
+	return nullptr;
 }

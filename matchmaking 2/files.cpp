@@ -26,7 +26,7 @@ const sf::String files::Get_error()
 	return Error_String;
 }
 
-void files::Mount(sf::String File_name)
+void files::Mount(const sf::String File_name)
 {
 	Error = PHYSFS_mount(File_name.toAnsiString().c_str(), "", 1);
 	Error = !Error;
@@ -36,7 +36,7 @@ void files::Mount(sf::String File_name)
 	}
 }
 
-sf::Texture files::Get_texture(sf::String File_name)
+sf::Texture files::Get_texture(const sf::String File_name)
 {
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Texture Texture;
@@ -62,7 +62,7 @@ sf::Texture files::Get_texture(sf::String File_name)
 	return Texture;
 }
 
-sf::Image files::Get_image(sf::String File_name)
+sf::Image files::Get_image(const sf::String File_name)
 {
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Image Image;
@@ -86,7 +86,7 @@ sf::Image files::Get_image(sf::String File_name)
 	return Image;
 }
 
-sf::SoundBuffer files::Get_sound(sf::String File_name)
+sf::SoundBuffer files::Get_sound(const sf::String File_name)
 {
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::SoundBuffer Sound_buffer;
@@ -110,7 +110,7 @@ sf::SoundBuffer files::Get_sound(sf::String File_name)
 	return Sound_buffer;
 }
 
-sf::Font files::Get_font(sf::String File_name)
+sf::Font files::Get_font(const sf::String File_name)
 {
 	sf::String Extension = File_name.substring(File_name.getSize() - 3, 3);
 	sf::Font Font;
@@ -134,12 +134,12 @@ sf::Font files::Get_font(sf::String File_name)
 	return Font;
 }
 
-void files::Set_Error(sf::String Error)
+void files::Set_Error(const sf::String Error)
 {
 	Error_String = Error;
 }
 
-bool files::File_exist(sf::String File_name)
+bool files::File_exist(const sf::String File_name)
 {
 	if (PHYSFS_exists(File_name.toAnsiString().c_str()))
 	{

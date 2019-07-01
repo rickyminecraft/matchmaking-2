@@ -8,20 +8,21 @@
 #include "sound.h"
 #include "textures.h"
 #include "files.h"
+#include "bouton.h"
 
-class matchmaking//: virtual private files
+class matchmaking
 {
 public:
 	matchmaking();
 	~matchmaking();
 
-	//start the game
+	//boucle principal
 	bool Run();
 
 private:
-	//current stat
+	//etat actuel
 	game_stats Statut;
-	//is the game alive and running ?
+	//continue t'on a jouer ?
 	bool Is_running = true;
 
 	//resolution
@@ -33,7 +34,13 @@ private:
 	//window instance
 	std::unique_ptr <sf::RenderWindow> Windows;
 
+	//une representation des tuiles
 	tiles Tiles;
+	//une representation des boutons
+	std::vector<Bouton> tuiles;
+	Bouton Play;
+	Bouton Exit;
+	Bouton Hover;
 	//sound instance
 	std::unique_ptr <sound>  Sound;
 	//texture instance

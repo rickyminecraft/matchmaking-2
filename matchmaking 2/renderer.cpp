@@ -18,13 +18,46 @@ renderer::~renderer()
 {
 }
 
-//renderer renderer::Add(sf::Vector2f Position, sf::Vector2f Origin, Type Texture_type, sf::Vector2f Scale1, short Number)
-//{
-//	Rectangle(Position, Origin);
-//	Scale(Scale1);
-//	Texture(Texture_type, Number);
-//	return *this;
-//}
+void renderer::Add_tuile(const sf::Vector2f Position, const short Number)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(128.0f, 128.0f));
+}
+
+void renderer::Add_fond(const short Number)
+{
+	Rectangle(sf::Vector2f(0.0f, 0.0f));
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(Width, Height));
+	Texture(Number);
+}
+
+void renderer::Add_exit(const sf::Vector2f Position)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(100.0f, 100.0f));
+	Rectangle_database[Rectangle_database.size()-1].setTexture(Textures->Get_exit());
+}
+
+void renderer::Add_play(const sf::Vector2f Position)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(100.0f, 100.0f));
+	Rectangle_database[Rectangle_database.size()-1].setTexture(Textures->Get_play());
+}
+
+void renderer::Add_hover(const sf::Vector2f Position)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(100.0f, 100.0f));
+	Rectangle_database[Rectangle_database.size()-1].setTexture(Textures->Get_hover());
+}
+
+void renderer::add_selection(const sf::Vector2f Position)
+{
+	Rectangle(Position);
+	Rectangle_database[Rectangle_database.size()-1].setSize(sf::Vector2f(128.0f, 128.0f));
+	Rectangle_database[Rectangle_database.size()-1].setTexture(Textures->Get_selection());
+}
 
 void renderer::Render()
 {
@@ -38,7 +71,14 @@ void renderer::Render()
 	Windows->display();
 }
 
-void renderer::Rectangle(sf::Vector2f Position, sf::Vector2f Origin)
+void renderer::Rectangle(const sf::Vector2f Position)
+{
+	sf::RectangleShape Rectangle;
+	Rectangle.setPosition(Position);
+	Rectangle_database.push_back(Rectangle);
+}
+
+void renderer::Rectangle(const sf::Vector2f Position, const sf::Vector2f Origin)
 {
 	sf::RectangleShape Rectangle;
 	Rectangle.setOrigin(Origin);
@@ -46,13 +86,12 @@ void renderer::Rectangle(sf::Vector2f Position, sf::Vector2f Origin)
 	Rectangle_database.push_back(Rectangle);
 }
 
-void renderer::Scale(sf::Vector2f Scale)
+void renderer::Scale(const sf::Vector2f Scale)
 {
-	Rectangle_database[Rectangle_database.size()].setScale(Scale);
+	Rectangle_database[Rectangle_database.size()-1].setScale(Scale);
 }
 
-//renderer renderer::Texture(Type Texture_type, short ID)
-//{
-	//Rectangle_database[Rectangle_database.size()].getTexture;
-//	return *this;
-//}
+void renderer::Texture(const short _ID)
+{
+
+}

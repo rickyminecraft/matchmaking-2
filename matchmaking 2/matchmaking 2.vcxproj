@@ -124,7 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="button.cpp" />
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="files.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="matchmaking.cpp" />
@@ -134,14 +134,16 @@
     <ClCompile Include="tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="button.h" />
+    <ClInclude Include="animation.h" />
+    <ClInclude Include="animation_stats.h" />
+    <ClInclude Include="bouton.h" />
     <ClInclude Include="files.h" />
     <ClInclude Include="game_stats.h" />
     <ClInclude Include="matchmaking.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="sound.h" />
-    <ClInclude Include="SoundTypes.h" />
+    <ClInclude Include="soundTypes.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="tiles.h" />
   </ItemGroup>

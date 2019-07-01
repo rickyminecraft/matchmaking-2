@@ -20,11 +20,8 @@ matchmaking::~matchmaking()
 bool matchmaking::Run()
 {
 	sf::Event event; 
-	//sf::Sprite test; 
-	//sf::Sound mtest; 
-	//sf::Image image; 
-	//sf::Text texte;
 
+	//pour eviter les repetition de clic
 	short count = 0;
 
 	while (Is_running)
@@ -42,11 +39,17 @@ bool matchmaking::Run()
 			//	texte.setCharacterSize(20);
 			//	texte.setPosition(sf::Vector2f(30.0f, 30.0f));
 			//	texte.setString("bonjour");
-			//mtest = Sound.get()->Sound(Sound_type::musique);
 			Tiles.Reset();
+			Play.Set_position(sf::Vector2f(400.0f, 334.0f));
+			Play.Set_size(sf::Vector2f(100.0f, 100.0f));
+			Exit.Set_position(sf::Vector2f(524.0f, 334.0f));
+			Exit.Set_size(sf::Vector2f(100.0f, 100.0f));
+			Hover.Set_size(sf::Vector2f(100.0f, 100.0f));
 			Statut = game_stats::Main;
 			break;
 		case game_stats::Main:
+			bool Is_hover;
+			Is_hover = false;
 			switch (event.type)
 			{
 			case sf::Event::Closed:
@@ -55,7 +58,14 @@ bool matchmaking::Run()
 			case sf::Event::MouseButtonPressed:
 				if (count == 0)
 				{
-					
+					if (Play.is_inside(sf::Vector2f((float)event.mouseButton.x, (float)event.mouseButton.y)))
+					{
+						Statut = game_stats::Play;
+					}
+					if (Exit.is_inside(sf::Vector2f((float)event.mouseButton.x, (float)event.mouseButton.y)))
+					{
+						Statut = game_stats::Exit;
+					}
 				}
 				count++;
 				break;
@@ -63,9 +73,24 @@ bool matchmaking::Run()
 				count = 0;
 				break;
 			case sf::Event::MouseMoved:
-				
+				if (Play.is_inside(sf::Vector2f((float)event.mouseMove.x, (float)event.mouseMove.y)))
+				{
+					Hover.Set_position(Play.Get_Position());
+					Is_hover = true;
+				}
+				if (Exit.is_inside(sf::Vector2f((float)event.mouseMove.x, (float)event.mouseMove.y)))
+				{
+					Hover.Set_position(Exit.Get_Position());
+					Is_hover = true;
+				}
 				break;
 			}
+			if (Is_hover)
+			{
+				Renderer->Add_hover(Hover.Get_Position());
+			}
+			Renderer->Add_play(Play.Get_Position());
+			Renderer->Add_exit(Exit.Get_Position());
 			break;
 		case game_stats::Play:
 			switch (event.type)
@@ -96,18 +121,25 @@ bool matchmaking::Run()
 			break;
 		case game_stats::Win:
 			//si on gagne, joue un son
-			Sound.get()->Sound(Sound_type::victoire);
+			Sound.get()->Sound(Sound_type::victoire)->play();
+			Tiles.Reset();
+			//do something
+			Statut = game_stats::Next;
 			break;
 		case game_stats::Next:
+			//do something
+			Statut = game_stats::Play;
 			break;
 		case game_stats::Exit:
 			Is_running = false;
 			break;
 		}
-		/*if (mtest.getStatus() == sf::SoundSource::Stopped)
+		//musique de fond
+		if (Sound.get()->Sound(Sound_type::musique)->getStatus() == sf::SoundSource::Stopped)
 		{
-			mtest.play();
-		}*/
+			Sound.get()->Sound(Sound_type::musique)->play();
+		}
+
 		Renderer->Render();
 
 	}

@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-struct Animpixels
+struct Pixel
 {
 	void create()
 	{

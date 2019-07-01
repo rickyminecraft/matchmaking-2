@@ -38,12 +38,12 @@ textures::~textures()
 {
 }
 
-sf::Texture * textures::Get_tuile(short Number)
+sf::Texture * textures::Get_tuile(const short Number)
 {
 	return &Tuiles[Number];
 }
 
-sf::Texture * textures::Get_fond(short Number)
+sf::Texture * textures::Get_fond(const short Number)
 {
 	return &Fonds[Number];
 }
@@ -73,7 +73,7 @@ sf::Texture * textures::Get_hover()
 	return &Thover;
 }
 
-sf::Image textures::Get_Image(short Number)
+sf::Image textures::Get_Image(const short Number)
 {
 	return Images_tuile[Number];
 }

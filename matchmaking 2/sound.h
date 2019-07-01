@@ -13,7 +13,7 @@ public:
 	sound(files * _Files);
 	~sound();
 
-	sf::Sound Sound(Sound_type Type);
+	sf::Sound * Sound(const Sound_type Type);
 
 private:
 	//stock a handle to files
@@ -21,6 +21,6 @@ private:
 	std::vector<sf::SoundBuffer> Buffers;
 	std::vector<sf::Sound> Sounds;
 
-	sf::String Files_name[4] = {"match.ogg", "musique.ogg", "retourne.ogg", "victoire.ogg"};
+	const sf::String Files_name[4] = {"match.ogg", "musique.ogg", "retourne.ogg", "victoire.ogg"};
 };
 
