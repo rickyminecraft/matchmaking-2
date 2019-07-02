@@ -27,7 +27,7 @@ bool matchmaking::Run()
 	sf::Vector2f Position_actuel, Position_click;
 	//pour eviter les repetition de clic
 	//pour compter les tuiles retourné
-	//les 2 numero de tuiles a comparais
+	//les 2 numero de tuiles a comparer
 	short Click = 0, Retourne = 0, Un, Deux;
 
 	while (Is_running)
@@ -244,6 +244,13 @@ bool matchmaking::Run()
 			break;
 		case game_stats::Next: //pour changer le fond et renouveler les tuiles
 			Tiles.Reset();
+			for (short y = 0; y < 6; ++y)
+			{
+				for (short x = 0; x < 8; ++x)
+				{
+					Tuiles[x + (8 * y)].Set_ID(Tiles.Get(x + (8 * y)));
+				}
+			}
 			Essai = 0;
 			++Fond;
 			if (Fond == 17)

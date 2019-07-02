@@ -12,7 +12,9 @@ public:
 	explicit textures(files * _Files);
 	~textures();
 
+	//on recupere un pointeur sur la texture 'number' pour les tuiles
 	sf::Texture * Get_tuile(const short Number);
+	//on recupere un pointeur sur la texture du fond
 	sf::Texture * Get_fond(const short Number);
 	sf::Texture * Get_exit();
 	sf::Texture * Get_play();
