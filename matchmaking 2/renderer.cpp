@@ -4,7 +4,7 @@
 
 renderer::renderer()
 {
-
+	Time = Horloge.now();
 }
 
 renderer::renderer(sf::RenderWindow * Handle, textures * _Textures, fonte * _Fonte)
@@ -86,36 +86,41 @@ void renderer::Add_score_big(const short Score)
 
 void renderer::Render()
 {
-	//on efface
-	Windows->clear();
+	auto Time2 = Horloge.now();
+	//permet de ne tourner qu'a 50 ips
+	if ((Time2 - Time) >= std::chrono::microseconds(20000))
+	{
+		//on efface
+		Windows->clear();
 
-	//d'abord on dessine tuiles ou boutons
-	for (int Boucle = 0; Boucle < Rectangle_database.size(); ++Boucle)
-	{
-		Windows->draw(Rectangle_database[Boucle]);
-	}
-	Rectangle_database.clear();
-	//puis on dessine les animations
-	if (Anim_Num_1 != -1)
-	{
-		Run_anim();
+		//d'abord on dessine tuiles ou boutons
 		for (int Boucle = 0; Boucle < Rectangle_database.size(); ++Boucle)
 		{
 			Windows->draw(Rectangle_database[Boucle]);
 		}
 		Rectangle_database.clear();
-	}
-	//on dessine les particules s'il y en a
-	make_particles();
-	//et enfin le texte
-	if (Draw_text)
-	{
-		Windows->draw(Texte);
-		Draw_text = false;
-	}
+		//puis on dessine les animations
+		if (Anim_Num_1 != -1)
+		{
+			Run_anim();
+			for (int Boucle = 0; Boucle < Rectangle_database.size(); ++Boucle)
+			{
+				Windows->draw(Rectangle_database[Boucle]);
+			}
+			Rectangle_database.clear();
+		}
+		//on dessine les particules s'il y en a
+		make_particles();
+		//et enfin le texte
+		if (Draw_text)
+		{
+			Windows->draw(Texte);
+			Draw_text = false;
+		}
 
-	//et on affiche le tout
-	Windows->display();
+		//et on affiche le tout
+		Windows->display();
+	}
 }
 
 void renderer::Destroy(const sf::Vector2f Position, const short Number)
@@ -128,7 +133,6 @@ void renderer::Destroy(const sf::Vector2f Position, const short Number)
 	Destroy_images.push_back(Image);
 	Texture.loadFromImage(Destroy_images[Destroy_images.size() - 1]);
 	Destroy_Textures.push_back(Texture);
-	Time = Horloge.now();
 	Is_destroying = true;
 }
 
@@ -167,8 +171,7 @@ const bool renderer::Is_Anim_End()
 
 void renderer::make_particles()
 {
-	auto Time2 = Horloge.now();
-	if (Is_destroying && (Time2 - Time) >= std::chrono::microseconds(440))
+	if (Is_destroying)
 	{
 		sf::RectangleShape Rectangle;
 		
