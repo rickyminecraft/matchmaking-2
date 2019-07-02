@@ -7,9 +7,10 @@ renderer::renderer()
 
 }
 
-renderer::renderer(sf::RenderWindow * Handle, textures * _Textures)
+renderer::renderer(sf::RenderWindow * Handle, textures * _Textures, fonte * _Fonte)
 {
 	Textures = _Textures;
+	Fonte = _Fonte;
 	Windows = Handle;
 }
 
@@ -67,6 +68,22 @@ void renderer::Add_selection(const sf::Vector2f Position)
 	Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_selection());
 }
 
+void renderer::Add_score_small(const short Score)
+{
+	Texte = Fonte->Get_small();
+	sf::String String = "nombre d'essai : " + std::to_string(Score);
+	Texte.setString(String);
+	Draw_text = true;
+}
+
+void renderer::Add_score_big(const short Score)
+{
+	Texte = Fonte->Get_big();
+	sf::String String = "SCORE : " + std::to_string(Score);
+	Texte.setString(String);
+	Draw_text = true;
+}
+
 void renderer::Render()
 {
 	Windows->clear();
@@ -76,6 +93,12 @@ void renderer::Render()
 		Windows->draw(Rectangle_database[Boucle]);
 	}
 	Rectangle_database.clear();
+	if (Draw_text)
+	{
+		Windows->draw(Texte);
+		Draw_text = false;
+	}
+
 	Windows->display();
 }
 

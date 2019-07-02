@@ -11,6 +11,7 @@
 #include "textures.h"
 #include "files.h"
 #include "bouton.h"
+#include "fonte.h"
 
 class matchmaking
 {
@@ -22,12 +23,15 @@ public:
 	bool Run();
 
 private:
+	void Show_score(bool Big);
 	//etat actuel
 	game_stats Statut;
 	//continue t'on a jouer ?
 	bool Is_running = true, do_select = false;
 	//conpteur pour les fonds
 	short Fond = 0;
+	//compteur pour le nombre d'essai
+	short Essai = 0;
 
 	//resolution
 	const unsigned int Width = 1024, Height = 768;
@@ -49,6 +53,8 @@ private:
 	std::unique_ptr <sound>  Sound;
 	//texture instance
 	std::unique_ptr <textures>  Texture;
+	//fonte instance
+	std::unique_ptr <fonte>  Fonte;
 	//files instance
 	std::unique_ptr <files>  Files;
 	//renderer instance
