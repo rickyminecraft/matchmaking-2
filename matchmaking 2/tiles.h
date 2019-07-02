@@ -23,6 +23,7 @@ public:
 private:
 	//shuffle array content
 	void Shuffle();
+	const short Min = 0, Max = 48;
 
 	std::array<short, 48> Tiles;
 	std::array<bool, 48> BTiles;

@@ -157,6 +157,7 @@ bool matchmaking::Run()
 								case 0:
 									++Retourne;
 									Un = Boucle;
+									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Un), true);
 									Sound.get()->Sound(Sound_type::retourne)->play();
 									break;
 								case 1:
@@ -165,6 +166,7 @@ bool matchmaking::Run()
 										break;
 									++Retourne;
 									Deux = Boucle;
+									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Deux), true);
 									Sound.get()->Sound(Sound_type::retourne)->play();
 									time = horloge.now();
 									break;
@@ -177,7 +179,10 @@ bool matchmaking::Run()
 					//si la tuile est choisit
 					if (Tuiles[Boucle].Is_select())
 					{
-						Renderer->Add_tuile(Tuiles[Boucle].Get_Position(), Tuiles[Boucle].Get_ID());
+						if (Renderer->Is_Anim_End())
+						{
+							Renderer->Add_tuile(Tuiles[Boucle].Get_Position(), Tuiles[Boucle].Get_ID());
+						}
 					}
 					else
 					{
@@ -212,6 +217,7 @@ bool matchmaking::Run()
 					Tuiles[Deux].Unselect();
 					//et on remet le nombre de tuiles retourner a zero
 					Retourne = 0;
+					Renderer->Reset_anim();
 				}
 			}
 
@@ -227,7 +233,6 @@ bool matchmaking::Run()
 			//attend que la musique finisse
 			if (Sound.get()->Sound(Sound_type::victoire)->getStatus() != sf::SoundSource::Playing)
 			{
-				//do something
 				Statut = game_stats::Next;
 			}
 			//ajoute le fond

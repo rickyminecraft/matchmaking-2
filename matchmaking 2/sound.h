@@ -10,7 +10,7 @@ class sound
 {
 public:
 	sound();
-	sound(files * _Files);
+	explicit sound(files * _Files);
 	~sound();
 
 	sf::Sound * Sound(const Sound_type Type);

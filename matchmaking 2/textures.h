@@ -9,7 +9,7 @@ class textures
 {
 public:
 	textures();
-	textures(files * _Files);
+	explicit textures(files * _Files);
 	~textures();
 
 	sf::Texture * Get_tuile(const short Number);

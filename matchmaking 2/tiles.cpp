@@ -13,7 +13,7 @@ tiles::~tiles()
 
 const short tiles::Get(const short Numero)
 {
-	if (Numero < 0 || Numero > 48)
+	if (Numero < Min || Numero > Max)
 	{
 		return -1;
 	}
@@ -22,7 +22,7 @@ const short tiles::Get(const short Numero)
 
 const bool tiles::Is_done(const short Numero)
 {
-	if (Numero < 0 || Numero > 48)
+	if (Numero < Min || Numero > Max)
 	{
 		return false;
 	}
@@ -31,7 +31,7 @@ const bool tiles::Is_done(const short Numero)
 
 void tiles::Done(const short Numero)
 {
-	if (Numero > 0 || Numero < 48)
+	if (Numero > Min || Numero < Max)
 	{
 		BTiles[Numero] = true;
 	}
@@ -40,7 +40,7 @@ void tiles::Done(const short Numero)
 const bool tiles::Is_all_done()
 {
 	bool Done = true;
-	for (short Boucle = 0; Boucle < 48; ++Boucle)
+	for (short Boucle = Min; Boucle < Max; ++Boucle)
 	{
 		if (!BTiles[Boucle])
 		{
@@ -52,13 +52,13 @@ const bool tiles::Is_all_done()
 
 void tiles::Reset()
 {
-	for (short Boucle = 0; Boucle < 24; ++Boucle)
+	for (short Boucle = Min; Boucle < Max/2; ++Boucle)
 	{
 		Tiles[Boucle] = Boucle;
-		Tiles[Boucle + 24] = Boucle;
+		Tiles[Boucle + Max/2] = Boucle;
 
 		BTiles[Boucle] = false;
-		BTiles[Boucle + 24] = false;
+		BTiles[Boucle + Max/2] = false;
 	}
 	Shuffle();
 }

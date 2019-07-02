@@ -38,7 +38,7 @@ private:
 	//utiliser pour stocker toutes les infos mais pas en tant que rectangleshape
 	sf::RectangleShape Bouton;
 	//si on a un ID
-	short ID;
+	short ID = 0;
 	bool Bselect = false;
 };
 

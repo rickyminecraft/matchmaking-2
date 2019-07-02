@@ -7,7 +7,7 @@ class fonte
 {
 public:
 	fonte();
-	fonte(files * _Files);
+	explicit fonte(files * _Files);
 	~fonte();
 
 	sf::Text Get_small();
