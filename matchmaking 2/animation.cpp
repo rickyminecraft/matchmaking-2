@@ -63,7 +63,14 @@ void animation::Do_animation()
 	case true:
 		if (Rotation_1 > 0.0f)
 		{
-			Rotation_1 -= 0.002f;
+			if (debug)
+			{
+				Rotation_1 -= 0.05f;
+			}
+			else
+			{
+				Rotation_1 -= 0.002f;
+			}
 		}
 		else
 		{
@@ -73,7 +80,14 @@ void animation::Do_animation()
 	case false:
 		if (Rotation_1 < 1.0f)
 		{
-			Rotation_1 += 0.002f;
+			if (debug)
+			{
+				Rotation_1 += 0.05f;
+			}
+			else
+			{
+				Rotation_1 += 0.002f;
+			}
 		}
 		else
 		{
@@ -87,7 +101,14 @@ void animation::Do_animation()
 	case true:
 		if (Rotation_2 > 0.0f)
 		{
-			Rotation_2 -= 0.002f;
+			if (debug)
+			{
+				Rotation_1 -= 0.05f;
+			}
+			else
+			{
+				Rotation_2 -= 0.002f;
+			}
 		}
 		else
 		{
@@ -97,7 +118,14 @@ void animation::Do_animation()
 	case false:
 		if (Rotation_2 < 1.0f)
 		{
-			Rotation_2 += 0.002f;
+			if (debug)
+			{
+				Rotation_2 += 0.05f;
+			}
+			else
+			{
+				Rotation_2 += 0.002f;
+			}
 		}
 		else
 		{
@@ -117,18 +145,6 @@ const float animation::Get_Scale(const short _ID)
 		return Rotation_2;
 	}
 	return 0.0f;
-}
-
-const bool animation::Get_Direction(const short _ID)
-{
-	switch (_ID)
-	{
-	case 1:
-		return Direction_1;
-	case 2:
-		return Direction_2;
-	}
-	return false;
 }
 
 const animation_statut animation::Get_Statut(const short _ID)

@@ -140,6 +140,7 @@
     <ClInclude Include="animation_stats.h" />
     <ClInclude Include="bouton.h" />
     <ClInclude Include="fonte.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="sbouton.h" />
     <ClInclude Include="files.h" />
     <ClInclude Include="game_stats.h" />
@@ -150,6 +151,12 @@
     <ClInclude Include="soundTypes.h" />
     <ClInclude Include="textures.h" />
     <ClInclude Include="tiles.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

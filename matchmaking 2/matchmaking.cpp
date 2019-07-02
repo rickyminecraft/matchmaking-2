@@ -209,6 +209,8 @@ bool matchmaking::Run()
 					{
 						Tiles.Done(Un);
 						Tiles.Done(Deux);
+						Renderer->Destroy(Tuiles[Un].Get_Position(), Tiles.Get(Un));
+						Renderer->Destroy(Tuiles[Deux].Get_Position(), Tiles.Get(Deux));
 						Sound.get()->Sound(Sound_type::pair)->play();
 					}
 					//dans tout les cas, on les remet a l'etat par defaut

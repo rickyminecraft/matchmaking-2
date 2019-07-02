@@ -29,7 +29,7 @@ private:
 	//is file exist ?
 	bool File_exist(const sf::String File_name);
 
-	const sf::String Pak_name = "matchmaking.zip";
+	const sf::String Pak_name = "matchmaking.pak";
 
 	bool Error;
 	sf::String Error_String;

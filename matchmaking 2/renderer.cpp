@@ -105,6 +105,8 @@ void renderer::Render()
 		}
 		Rectangle_database.clear();
 	}
+	//on dessine les particules s'il y en a
+	make_particles();
 	//et enfin le texte
 	if (Draw_text)
 	{
@@ -114,6 +116,20 @@ void renderer::Render()
 
 	//et on affiche le tout
 	Windows->display();
+}
+
+void renderer::Destroy(const sf::Vector2f Position, const short Number)
+{
+	Destroy_positions.push_back(Position);
+	Destroy_tuile_ID.push_back(Number);
+	Destroy_tuile_progression.push_back(0);
+	sf::Image Image = Textures->Get_Image(Number);
+	sf::Texture Texture;
+	Destroy_images.push_back(Image);
+	Texture.loadFromImage(Destroy_images[Destroy_images.size() - 1]);
+	Destroy_Textures.push_back(Texture);
+	Time = Horloge.now();
+	Is_destroying = true;
 }
 
 void renderer::Start_anim(const sf::Vector2f Position, const short Number, const bool Direction)
@@ -147,6 +163,73 @@ void renderer::Reset_anim()
 const bool renderer::Is_Anim_End()
 {
 	return !Is_doing_anim;
+}
+
+void renderer::make_particles()
+{
+	auto Time2 = Horloge.now();
+	if (Is_destroying && (Time2 - Time) >= std::chrono::microseconds(440))
+	{
+		sf::RectangleShape Rectangle;
+		
+		for (short Boucle = 0; Boucle < Destroy_images.size(); ++Boucle)
+		{
+			if (Destroy_tuile_progression[Boucle] < Destroy_images[Boucle].getSize().y)
+			{
+				for (unsigned int X = 0; X < Destroy_images[Boucle].getSize().x; ++X)
+				{
+					Pixel newPixel;
+					newPixel.create();
+					newPixel.setcolor(Destroy_images[Boucle].getPixel(X, Destroy_tuile_progression[Boucle]));
+					newPixel.setpos(sf::Vector2u(X + (unsigned int)Destroy_positions[Boucle].x, Destroy_tuile_progression[Boucle] + (unsigned int)Destroy_positions[Boucle].y));
+					newPixel.setspeed();
+					newPixel.setdirection();
+					Pixels.push_back(newPixel);
+					Destroy_images[Boucle].setPixel(X, Destroy_tuile_progression[Boucle], sf::Color::Transparent);
+				}
+				Destroy_tuile_progression[Boucle] += 1;
+			}
+		}
+		for (short Boucle = 0; Boucle < Destroy_Textures.size(); ++Boucle)
+		{
+			Rectangle.setPosition(Destroy_positions[Boucle]);
+			Rectangle.setSize(sf::Vector2f(128.0f, 128.0f));
+			Destroy_Textures[Boucle].update(Destroy_images[Boucle]);
+			Rectangle.setTexture(&Destroy_Textures[Boucle]);
+			Windows->draw(Rectangle);
+		}
+
+		if (!Pixels.empty())
+		{
+			sf::VertexArray vertexarray(sf::Points);
+			for (std::size_t Boucle = Pixels.size(); Boucle > 0; Boucle--)
+			{
+				if (Pixels[Boucle - 1].alive())
+				{
+					Pixels[Boucle - 1].move();
+					sf::Vertex vertex;
+					vertex.color = Pixels[Boucle - 1].getcolor();
+					vertex.position = Pixels[Boucle - 1].getpos();
+					vertexarray.append(vertex);
+				}
+				else
+				{
+					Pixels.erase(Pixels.cbegin() + (Boucle - 1));
+				}
+			}
+			Windows->draw(vertexarray);
+		}
+		else
+		{
+			Destroy_positions.clear();
+			Destroy_tuile_ID.clear();
+			Destroy_tuile_progression.clear();
+			Destroy_images.clear();
+			Destroy_Textures.clear();
+			Is_destroying = false;
+		}
+		Time = Horloge.now();
+	}
 }
 
 void renderer::Stop_anim()

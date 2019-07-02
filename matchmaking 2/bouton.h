@@ -11,22 +11,12 @@ public:
 
 	void Set_position(const sf::Vector2f Position);
 
-	void Set_origin(const sf::Vector2f Origin);
-
-	void Set_scale(const float Scale_x, const float Scale_y);
-
 	void Set_ID(const short _ID);
 
 	void Select();
 	void Unselect();
 
-	const sf::RectangleShape * Get_bouton();
-
 	const sf::Vector2f Get_Position();
-
-	const sf::Vector2f Get_Origin();
-
-	const sf::Vector2f Get_Scale();
 
 	const short Get_ID();
 
