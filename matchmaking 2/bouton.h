@@ -6,18 +6,18 @@ class bouton
 public:
 	bouton();
 	~bouton();
-
+	//modifie la taille du bouton
 	void Set_size(const sf::Vector2f Taille);
-
+	//modifie la position du bouton
 	void Set_position(const sf::Vector2f Position);
-
+	//modifie l'ID du bouton
 	void Set_ID(const short _ID);
 
 	void Select();
 	void Unselect();
 
 	const sf::Vector2f Get_Position();
-
+	//recupere l'ID du bouton
 	const short Get_ID();
 
 	const bool Is_inside(const sf::Vector2f Position);

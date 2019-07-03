@@ -13,6 +13,7 @@ public:
 	explicit sound(files * _Files);
 	~sound();
 
+	//on recupere un pointeur sur un son
 	sf::Sound * Sound(const Sound_type Type);
 
 private:

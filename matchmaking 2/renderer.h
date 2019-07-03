@@ -15,23 +15,33 @@ public:
 	renderer(sf::RenderWindow *Handle, textures * _Textures, fonte * _Fonte);
 	~renderer();
 
+	//dessine une tuile
 	void Add_tuile(const sf::Vector2f Position, const short Number);
+	//dessine le dessous des tuile
 	void Add_back(const sf::Vector2f Position);
+	//dessine le fond derriere les tuile
 	void Add_fond(const short Number);
+	//dessine le bouton quitter
 	void Add_exit(const sf::Vector2f Position);
+	//dessine le bouton jouer
 	void Add_play(const sf::Vector2f Position);
+	//dessine le carré rouge quand on passe sur le bouton jouer/quitter
 	void Add_hover(const sf::Vector2f Position);
+	//dessine le ? quand on passe sur une tuile
 	void Add_selection(const sf::Vector2f Position);
-
+	//dessine le texte en haut a gauche
 	void Add_score_small(const short Score);
+	//dessine le score en gros
 	void Add_score_big(const short Score);
 	//draw everything waiting to be rendered
 	void Render();
-	
+	//lance le systeme de particules
 	void Destroy(const sf::Vector2f Position, const short Number);
-
+	//lance l'animation quand on selectionne une tuile
 	void Start_anim(const sf::Vector2f Position, const short Number, const bool Direction = false);
+	//raz l'animation
 	void Reset_anim();
+	//recuepre l'info si les animations sont fini
 	const bool Is_Anim_End();
 
 private:
@@ -52,6 +62,7 @@ private:
 	bool Is_doing_anim = false;
 	bool Is_destroying = false;
 
+	//valeurs indispensable pour les particules
 	std::vector<sf::Vector2f> Destroy_positions;
 	std::vector<short> Destroy_tuile_ID;
 	std::vector<unsigned int> Destroy_tuile_progression;

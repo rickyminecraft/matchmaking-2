@@ -9,11 +9,15 @@ public:
 	animation();
 	~animation();
 
-	//up = true, down = false
+	//haut = true, bas = false
 	void Set_Direction(const bool Direction, const short _ID);
+	//demarre l'animation
 	void Start_Animation(const short _ID);
+	//fait avancer l'animation
 	void Do_animation();
+	//recupere l'echelle en y
 	const float Get_Scale(const short _ID);
+	//recupere le statut, fini ? non fini ?
 	const animation_statut Get_Statut(const short _ID);
 
 protected:

@@ -80,9 +80,6 @@
     <ClInclude Include="animation_stats.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="sbouton.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="bouton.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

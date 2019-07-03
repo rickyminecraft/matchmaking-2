@@ -10,7 +10,9 @@ public:
 	explicit fonte(files * _Files);
 	~fonte();
 
+	//recupere un texte deja formater pour petite taille
 	sf::Text Get_small();
+	//recupere un texte deja formater pour grande taille
 	sf::Text Get_big();
 private:
 	//stock a handle to files

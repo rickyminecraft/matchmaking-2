@@ -16,12 +16,17 @@ public:
 	sf::Texture * Get_tuile(const short Number);
 	//on recupere un pointeur sur la texture du fond
 	sf::Texture * Get_fond(const short Number);
+	//on recupere un pointeur sur la texture quitter
 	sf::Texture * Get_exit();
+	//on recupere un pointeur sur la texture jouer
 	sf::Texture * Get_play();
+	//on recupere un pointeur sur la texture '?'
 	sf::Texture * Get_selection();
+	//on recupere un pointeur sur la texture arriere de tuile
 	sf::Texture * Get_back();
+	//on recupere un pointeur sur la texture rouge de fond
 	sf::Texture * Get_hover();
-
+	//on recupere une copie de l'image d'une texture
 	//pour les particules
 	sf::Image Get_Image(const short Number);
 

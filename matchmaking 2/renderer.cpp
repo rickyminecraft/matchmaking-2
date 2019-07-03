@@ -87,8 +87,8 @@ void renderer::Add_score_big(const short Score)
 void renderer::Render()
 {
 	auto Time2 = Horloge.now();
-	//permet de ne tourner qu'a 50 ips
-	if ((Time2 - Time) >= std::chrono::microseconds(20000))
+	//permet de tourner avec un ips limiter
+	if ((Time2 - Time) >= std::chrono::microseconds(11111)) //11111 = 90 ips 20000 = 50 ips 10000 = 100 ips
 	{
 		//on efface
 		Windows->clear();
