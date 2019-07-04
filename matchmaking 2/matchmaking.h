@@ -32,7 +32,8 @@ private:
 	short Fond = 0;
 	//compteur pour le nombre d'essai
 	short Essai = 0;
-
+	//mute/unmute musique
+	bool Mute = false;
 	//resolution
 	const unsigned int Width = 1024, Height = 768;
 	//game name

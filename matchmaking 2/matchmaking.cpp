@@ -64,6 +64,12 @@ bool matchmaking::Run()
 			case sf::Event::Closed:
 				Statut = game_stats::Exit;
 				break;
+			case sf::Event::KeyPressed:
+				if (event.key.code == sf::Keyboard::M)
+				{
+					Mute = !Mute;
+				}
+				break;
 			case sf::Event::MouseButtonPressed:
 				if (Play.Is_inside(sf::Vector2f((float)event.mouseButton.x, (float)event.mouseButton.y)))
 				{
@@ -114,6 +120,10 @@ bool matchmaking::Run()
 				if (event.key.code == sf::Keyboard::Escape)
 				{
 					Statut = game_stats::Main;
+				}
+				if (event.key.code == sf::Keyboard::M)
+				{
+					Mute = !Mute;
 				}
 				break;
 			case sf::Event::MouseButtonPressed:
@@ -264,9 +274,17 @@ bool matchmaking::Run()
 			break;
 		}
 		//musique de fond qui tourne en boucle
-		if (Sound.get()->Sound(Sound_type::musique)->getStatus() == sf::SoundSource::Stopped)
+		if (!Mute)
 		{
-			Sound.get()->Sound(Sound_type::musique)->play();
+			if (Sound.get()->Sound(Sound_type::musique)->getStatus() == sf::SoundSource::Stopped)
+			{
+				Sound.get()->Sound(Sound_type::musique)->setVolume(50);
+				Sound.get()->Sound(Sound_type::musique)->play();
+			}
+		}
+		else
+		{
+			Sound.get()->Sound(Sound_type::musique)->stop();
 		}
 
 		Renderer->Render();
