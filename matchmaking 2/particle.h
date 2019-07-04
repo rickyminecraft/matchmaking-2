@@ -43,9 +43,9 @@ struct Pixel
 	{
 		std::random_device r;
 		std::default_random_engine engine(r());
-		std::uniform_real_distribution<float> uniform_dist(75.0f, 85.0f);
+		std::uniform_real_distribution<float> uniform_dist(80.0f, 110.0f);
 		float rotation = uniform_dist(engine);
-		float angle = rotation * 3.14f / 180.f;
+		float angle = rotation * 3.141592653589793238463f / 180.f;
 		direction.x = cos(angle) * speed;
 		direction.y = sin(angle) * speed;
 	}
