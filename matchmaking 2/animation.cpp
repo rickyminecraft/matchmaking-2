@@ -4,6 +4,9 @@
 
 animation::animation()
 {
+	Rotation.resize(2);
+	Stats.resize(2);
+	Direction.resize(2);
 }
 
 
@@ -11,127 +14,63 @@ animation::~animation()
 {
 }
 
-void animation::Set_Direction(const bool Direction, const short _ID)
+void animation::Set_Direction(const bool _Direction, const short _ID)
 {
-	switch (_ID)
-	{
-	case 1:
-		Direction_1 = Direction;
-		break;
-	case 2:
-		Direction_2 = Direction;
-		break;
-	}
+	Direction[_ID] = _Direction;
+	Stats[_ID] = animation_statut::en_cours;
 }
 
-void animation::Start_Animation(const short _ID)
+void animation::Start_Animation()
 {
-	switch (_ID)
+	for (short Boucle = 0; Boucle < Anim_Num.size(); ++Boucle)
 	{
-	case 1:
-		switch (Direction_1)
+		if (Get_Statut(Boucle) != animation_statut::fini)
 		{
-		case true:
-			Rotation_1 = 1.0f;
-			break;
-		case false:
-			Rotation_1 = 0.0f;
-			break;
+			switch (Direction[Boucle])
+			{
+			case true:
+				Rotation[Boucle] = 1.0f;
+				Stats[Boucle] = animation_statut::en_cours;
+				break;
+			case false:
+				Rotation[Boucle] = 0.0f;
+				Stats[Boucle] = animation_statut::en_cours;
+				break;
+			}
 		}
-		
-		Stats_1 = animation_statut::en_cours;
-		break;
-	case 2:
-		switch (Direction_1)
-		{
-		case true:
-			Rotation_2 = 1.0f;
-			break;
-		case false:
-			Rotation_2 = 0.0f;
-			break;
-		}
-		Stats_2 = animation_statut::en_cours;
-		break;
 	}
 }
 
 void animation::Do_animation()
 {
-	switch (Direction_1)
+	for (short Boucle = 0; Boucle < Anim_Num.size(); ++Boucle)
 	{
-	case true:
-		if (Rotation_1 > 0.0f)
+		if (Get_Statut(Boucle) != animation_statut::fini)
 		{
-			if (debug)
+			switch (Direction[Boucle])
 			{
-				Rotation_1 -= 0.05f;
-			}
-			else
-			{
-				Rotation_1 -= 0.002f;
-			}
-		}
-		else
-		{
-			Stats_1 = animation_statut::fini;
-		}
-		break;
-	case false:
-		if (Rotation_1 < 1.0f)
-		{
-			if (debug)
-			{
-				Rotation_1 += 0.05f;
-			}
-			else
-			{
-				Rotation_1 += 0.002f;
+			case true:
+				if (Rotation[Boucle] > 0.0f)
+				{
+					Rotation[Boucle] -= 0.1f;
+				}
+				else
+				{
+					Stats[Boucle] = animation_statut::_retourne;
+				}
+				break;
+			case false:
+				if (Rotation[Boucle] < 1.0f)
+				{
+					Rotation[Boucle] += 0.1f;
+				}
+				else
+				{
+					Stats[Boucle] = animation_statut::fini;
+				}
+				break;
 			}
 		}
-		else
-		{
-			Stats_1 = animation_statut::fini;
-		}
-		break;
-	}
-
-	switch (Direction_2)
-	{
-	case true:
-		if (Rotation_2 > 0.0f)
-		{
-			if (debug)
-			{
-				Rotation_1 -= 0.05f;
-			}
-			else
-			{
-				Rotation_2 -= 0.002f;
-			}
-		}
-		else
-		{
-			Stats_2 = animation_statut::fini;
-		}
-		break;
-	case false:
-		if (Rotation_2 < 1.0f)
-		{
-			if (debug)
-			{
-				Rotation_2 += 0.05f;
-			}
-			else
-			{
-				Rotation_2 += 0.002f;
-			}
-		}
-		else
-		{
-			Stats_2 = animation_statut::fini;
-		}
-		break;
 	}
 }
 
@@ -139,10 +78,10 @@ const float animation::Get_Scale(const short _ID)
 {
 	switch (_ID)
 	{
+	case 0:
+		return Rotation[0];
 	case 1:
-		return Rotation_1;
-	case 2:
-		return Rotation_2;
+		return Rotation[1];
 	}
 	return 0.0f;
 }
@@ -151,10 +90,10 @@ const animation_statut animation::Get_Statut(const short _ID)
 {
 	switch (_ID)
 	{
+	case 0:
+		return Stats[0];
 	case 1:
-		return Stats_1;
-	case 2:
-		return Stats_2;
+		return Stats[1];
 	}
 	return animation_statut::fini;
 }

@@ -167,7 +167,7 @@ bool matchmaking::Run()
 								case 0:
 									++Retourne;
 									Un = Boucle;
-									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Un), true);
+									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Un));
 									Sound.get()->Sound(Sound_type::retourne)->play();
 									break;
 								case 1:
@@ -176,7 +176,7 @@ bool matchmaking::Run()
 										break;
 									++Retourne;
 									Deux = Boucle;
-									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Deux), true);
+									Renderer->Start_anim(Tuiles[Boucle].Get_Position(), Tiles.Get(Deux));
 									Sound.get()->Sound(Sound_type::retourne)->play();
 									time = horloge.now();
 									break;
@@ -209,8 +209,8 @@ bool matchmaking::Run()
 				Show_score(false);
 				
 				time2 = horloge.now();
-				//si on a choisit 2 tuiles, on attend d'abord une demi-seconde
-				if (Retourne == 2 && time2 - time >= std::chrono::milliseconds(500))
+				//si on a choisit 2 tuiles, on attend d'abord une seconde
+				if (Retourne == 2 && time2 - time >= std::chrono::seconds(1))
 				{
 					//on incremente le nombre d'essai
 					++Essai;

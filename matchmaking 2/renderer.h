@@ -38,7 +38,7 @@ public:
 	//lance le systeme de particules
 	void Destroy(const sf::Vector2f Position, const short Number);
 	//lance l'animation quand on selectionne une tuile
-	void Start_anim(const sf::Vector2f Position, const short Number, const bool Direction = false);
+	void Start_anim(const sf::Vector2f Position, const short Number);
 	//raz l'animation
 	void Reset_anim();
 	//recuepre l'info si les animations sont fini
@@ -53,7 +53,6 @@ private:
 	void make_particles();
 	void Stop_anim();
 	void Run_anim();
-	void Reverse_anim(const short _ID);
 	void Rectangle(const sf::Vector2f Position);
 
 	short Rectangle_ID = 0, Animation_ID = 1;

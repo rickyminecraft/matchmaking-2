@@ -4,7 +4,6 @@
 
 renderer::renderer()
 {
-	Time = Horloge.now();
 }
 
 renderer::renderer(sf::RenderWindow * Handle, textures * _Textures, fonte * _Fonte)
@@ -12,6 +11,7 @@ renderer::renderer(sf::RenderWindow * Handle, textures * _Textures, fonte * _Fon
 	Textures = _Textures;
 	Fonte = _Fonte;
 	Windows = Handle;
+	Time = Horloge.now();
 }
 
 
@@ -88,7 +88,7 @@ void renderer::Render()
 {
 	auto Time2 = Horloge.now();
 	//permet de tourner avec un ips limiter
-	if ((Time2 - Time) >= std::chrono::microseconds(11111)) //11111 = 90 ips 20000 = 50 ips 10000 = 100 ips
+	if ((Time2 - Time) >= std::chrono::microseconds(10000)) //11111 = 90 ips 20000 = 50 ips 10000 = 100 ips
 	{
 		//on efface
 		Windows->clear();
@@ -100,15 +100,16 @@ void renderer::Render()
 		}
 		Rectangle_database.clear();
 		//puis on dessine les animations
-		if (Anim_Num_1 != -1)
+		for (short Boucle = 0; Boucle < Anim_Num.size(); ++Boucle)
 		{
 			Run_anim();
-			for (int Boucle = 0; Boucle < Rectangle_database.size(); ++Boucle)
+			for (int Boucle1 = 0; Boucle1 < Rectangle_database.size(); ++Boucle1)
 			{
-				Windows->draw(Rectangle_database[Boucle]);
+				Windows->draw(Rectangle_database[Boucle1]);
 			}
 			Rectangle_database.clear();
 		}
+		
 		//on dessine les particules s'il y en a
 		make_particles();
 		//et enfin le texte
@@ -120,6 +121,7 @@ void renderer::Render()
 
 		//et on affiche le tout
 		Windows->display();
+		Time = Horloge.now();
 	}
 }
 
@@ -136,32 +138,21 @@ void renderer::Destroy(const sf::Vector2f Position, const short Number)
 	Is_destroying = true;
 }
 
-void renderer::Start_anim(const sf::Vector2f Position, const short Number, const bool Direction)
+void renderer::Start_anim(const sf::Vector2f Position, const short Number)
 {
 	Is_doing_anim = true;
-	switch (Animation_ID)
-	{
-	case 1:
-		Anim_Num_1 = Number;
-		Anim_position_1 = Position;
-		Set_Direction(true, Animation_ID);
-		Start_Animation(Animation_ID);
-		++Animation_ID;
-		break;
-	case 2:
-		Anim_Num_2 = Number;
-		Anim_position_2 = Position;
-		Set_Direction(true, Animation_ID);
-		Start_Animation(Animation_ID);
-		break;
-	}
+	Anim_Num.push_back(Number);
+	Anim_position.push_back(Position);
+	Anim_direction.push_back(false);
+	Set_Direction(true, (short)Anim_Num.size() - 1);
+	Start_Animation();
 }
 
 void renderer::Reset_anim()
 {
-	Anim_Num_1 = Anim_Num_2 = -1;
-	Animation_ID = 1;
-	Anim_reverse_1 = Anim_reverse_2 = false;
+	Anim_Num.clear();
+	Anim_position.clear();
+	Anim_direction.clear();
 }
 
 const bool renderer::Is_Anim_End()
@@ -217,7 +208,7 @@ void renderer::make_particles()
 				}
 				else
 				{
-					Pixels.erase(Pixels.cbegin() + (Boucle - 1));
+					Pixels.erase(Pixels.cbegin() + Boucle - 1);
 				}
 			}
 			Windows->draw(vertexarray);
@@ -231,7 +222,6 @@ void renderer::make_particles()
 			Destroy_Textures.clear();
 			Is_destroying = false;
 		}
-		Time = Horloge.now();
 	}
 }
 
@@ -243,86 +233,39 @@ void renderer::Stop_anim()
 void renderer::Run_anim()
 {
 	Do_animation();
-	if (Get_Statut(1) == animation_statut::fini)
+	for (short Boucle = 0; Boucle < Anim_Num.size(); ++Boucle)
 	{
-		if (!Anim_reverse_1)
+		switch (Get_Statut(Boucle))
 		{
-			Reverse_anim(1);
-		}
-		else
-		{
-			Rectangle(sf::Vector2f(Anim_position_1.x + 64.0f, Anim_position_1.y + 64.0f));
-			Rectangle_database[Rectangle_database.size() - 1].setScale(sf::Vector2f(1.0f, Get_Scale(1)));
+		case animation_statut::_retourne:
+			Set_Direction(false, Boucle);
+			Start_Animation();
+			Anim_direction[Boucle] = !Anim_direction[Boucle];
+			break;
+		case animation_statut::fini:
+			Rectangle(sf::Vector2f(Anim_position[Boucle].x, Anim_position[Boucle].y));
 			Rectangle_database[Rectangle_database.size() - 1].setSize(sf::Vector2f(128.0f, 128.0f));
-			Rectangle_database[Rectangle_database.size() - 1].setOrigin(64.0f, 64.0f);
-			Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num_1));
-		}
-	}
-	else
-	{
-		Rectangle(sf::Vector2f(Anim_position_1.x + 64.0f, Anim_position_1.y + 64.0f));
-		Rectangle_database[Rectangle_database.size() - 1].setScale(sf::Vector2f(1.0f, Get_Scale(1)));
-		Rectangle_database[Rectangle_database.size() - 1].setSize(sf::Vector2f(128.0f, 128.0f));
-		Rectangle_database[Rectangle_database.size() - 1].setOrigin(64.0f, 64.0f);
-		if (!Anim_reverse_1)
-		{
-			Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_back());
-		}
-		else
-		{
-			Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num_1));
-		}
-	}
-	if (Anim_Num_2 != -1)
-	{
-		if (Get_Statut(2) == animation_statut::fini)
-		{
-			if (!Anim_reverse_2)
+			Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num[Boucle]));
+			if (Boucle == 1)
 			{
-				Reverse_anim(2);
-			}
-			else
-			{
-				Rectangle(sf::Vector2f(Anim_position_1.x + 64.0f, Anim_position_1.y + 64.0f));
-				Rectangle_database[Rectangle_database.size() - 1].setScale(sf::Vector2f(1.0f, Get_Scale(1)));
-				Rectangle_database[Rectangle_database.size() - 1].setSize(sf::Vector2f(128.0f, 128.0f));
-				Rectangle_database[Rectangle_database.size() - 1].setOrigin(64.0f, 64.0f);
-				Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num_1));
 				Stop_anim();
 			}
-		}
-		else
-		{
-			Rectangle(sf::Vector2f(Anim_position_2.x + 64.0f, Anim_position_2.y + 64.0f));
-			Rectangle_database[Rectangle_database.size() - 1].setScale(sf::Vector2f(1.0f, Get_Scale(2)));
+			break;
+		case animation_statut::en_cours:
+			Rectangle(sf::Vector2f(Anim_position[Boucle].x + 64.0f, Anim_position[Boucle].y + 64.0f));
+			Rectangle_database[Rectangle_database.size() - 1].setScale(sf::Vector2f(1.0f, Get_Scale(Boucle)));
 			Rectangle_database[Rectangle_database.size() - 1].setSize(sf::Vector2f(128.0f, 128.0f));
 			Rectangle_database[Rectangle_database.size() - 1].setOrigin(64.0f, 64.0f);
-			if (!Anim_reverse_2)
+			if (!Anim_direction[Boucle])
 			{
 				Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_back());
 			}
 			else
 			{
-				Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num_2));
+				Rectangle_database[Rectangle_database.size() - 1].setTexture(Textures->Get_tuile(Anim_Num[Boucle]));
 			}
+			break;
 		}
-	}
-}
-
-void renderer::Reverse_anim(const short _ID)
-{
-	switch (_ID)
-	{
-	case 1:
-		Anim_reverse_1 = true;
-		Set_Direction(false, 1);
-		Start_Animation(1);
-		break;
-	case 2:
-		Anim_reverse_2 = true;
-		Set_Direction(false, 2);
-		Start_Animation(2);
-		break;
 	}
 }
 

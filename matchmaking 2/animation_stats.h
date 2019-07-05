@@ -3,5 +3,6 @@
 enum animation_statut
 {
 	en_cours,
-	fini
+	_retourne,
+	fini,
 };
