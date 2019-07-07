@@ -55,6 +55,7 @@ sf::Texture files::Get_texture(const sf::String File_name)
 			Image.loadFromMemory(buffer, File_size);
 			Texture.loadFromImage(Image);
 		}
+		delete buffer;
 
 		PHYSFS_close(File_Handle);
 	}
@@ -79,6 +80,7 @@ sf::Image files::Get_image(const sf::String File_name)
 		{
 			Image.loadFromMemory(buffer, File_size);
 		}
+		delete buffer;
 
 		PHYSFS_close(File_Handle);
 	}
@@ -103,6 +105,7 @@ sf::SoundBuffer files::Get_sound(const sf::String File_name)
 		{
 			Sound_buffer.loadFromMemory(buffer, File_size);
 		}
+		delete buffer;
 
 		PHYSFS_close(File_Handle);
 	}
@@ -127,6 +130,8 @@ sf::Font files::Get_font(const sf::String File_name)
 		{
 			Font.loadFromMemory(buffer, File_size);
 		}
+		//ici on ne doit pas enlever le buffer, idiot, trouver ue solution.
+		//delete buffer;
 
 		PHYSFS_close(File_Handle);
 	}
